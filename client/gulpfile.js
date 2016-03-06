@@ -4,7 +4,7 @@ var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = r
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),
     replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'), typescript = require('gulp-tsc')
-	sass = require('gulp-sass'), browserSync = require('browser-sync').create(), rename = require('gulp-rename');
+	sass = require('gulp-sass'), browserSync = require('browser-sync').create(), rename = require('gulp-rename'), del = require('del');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
@@ -61,7 +61,7 @@ gulp.task('css', ['sass'], function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('sass', function() {
+gulp.task('sass', ['sass-clean'], function() {
 	return gulp.src('src/sass/*.scss')
 		.pipe(sass())
 		.pipe(rename(function (path) {
@@ -69,6 +69,10 @@ gulp.task('sass', function() {
 			path.extname = ".css";
 		}))
 		.pipe(gulp.dest('src/css'));
+});
+
+gulp.task('sass-clean', function(){
+	return del(['src/**/*-generated.css']);
 });
 
 // Copies index.html, replacing <script> and <link> tags to reference production URLs
@@ -97,8 +101,11 @@ gulp.task('serve', ['default'], function() {
         server: "./dist"
     });
 
-    gulp.watch("src/sass/*.scss", ['css']);
-    gulp.watch("src/**/*.html", ['html']).on('change', browserSync.reload);
+	// gulp.watch(["src/**/*.ts",
+				// "src/**/*.scss",
+				// "src/**/*.html"], ['default']).on('change', browserSync.reload);
+    // gulp.watch("src/sass/*.scss", ['css']).on('change', browserSync.reload);
+    // gulp.watch("src/**/*.html", ['html', 'js']).on('change', browserSync.reload);
 });
 
 gulp.task('default', ['html', 'js', 'css'], function(callback) {

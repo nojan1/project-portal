@@ -1,5 +1,25 @@
-<h2>Home</h2>
+<h2>Projects</h2>
 
-<p data-bind='text: message'></p>
+<button class="btn btn-primary pull-right"
+        data-bind="click: newProject">
+        New project
+</button>
 
-<button data-bind='click: doSomething'>Click me</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Project name
+            </th>
+             <th>
+                Last accessed
+            </th>
+        </tr>    
+    </thead>
+    <tbody data-bind="foreach: projects">
+        <tr>
+            <td data-bind="text: projectName"></td>
+            <td data-bind="text: lastAccess"></td>    
+        </tr>
+    </tbody>
+</table>
