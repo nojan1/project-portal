@@ -20,7 +20,11 @@ export class viewModel {
 
     public projects = ko.observableArray<ps.Project>();
 
-    public newProject() {
-        
+    public newProject = () => {
+        alert('create new project');
+    }
+    
+    public openProject = (project: ps.Project) => {
+        alert(project.projectId);
     }
 }

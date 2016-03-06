@@ -17,7 +17,7 @@
         </tr>    
     </thead>
     <tbody data-bind="foreach: projects">
-        <tr>
+        <tr data-bind="click: $parent.openProject">
             <td data-bind="text: projectName"></td>
             <td data-bind="text: lastAccess"></td>    
         </tr>
