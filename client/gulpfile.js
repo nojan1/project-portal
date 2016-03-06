@@ -3,7 +3,8 @@ var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = r
 
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),
-    replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'), typescript = require('gulp-tsc');
+    replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'), typescript = require('gulp-tsc')
+	sass = require('gulp-sass'), browserSync = require('browser-sync').create(), rename = require('gulp-rename');
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
@@ -31,7 +32,9 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
 
 // Compile all .ts files, producing .js and source map files alongside them
 gulp.task('ts', function() {
-    return gulp.src(['**/*.ts'])
+    return gulp.src(['!src/bower_modules/**/*.ts',
+					 '!node_modules/**/*.ts',
+					 '**/*.ts'])
         .pipe(typescript({
             module: 'amd',
             sourcemap: true,
@@ -48,7 +51,7 @@ gulp.task('js', ['ts'], function () {
 });
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
-gulp.task('css', function () {
+gulp.task('css', ['sass'], function () {
     var bowerCss = gulp.src('src/bower_modules/components-bootstrap/css/bootstrap.min.css')
             .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
         appCss = gulp.src('src/css/*.css'),
@@ -56,6 +59,16 @@ gulp.task('css', function () {
         fontFiles = gulp.src('./src/bower_modules/components-bootstrap/fonts/*', { base: './src/bower_modules/components-bootstrap/' });
     return es.concat(combinedCss, fontFiles)
         .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('sass', function() {
+	return gulp.src('src/sass/*.scss')
+		.pipe(sass())
+		.pipe(rename(function (path) {
+			path.basename += "-generated";
+			path.extname = ".css";
+		}))
+		.pipe(gulp.dest('src/css'));
 });
 
 // Copies index.html, replacing <script> and <link> tags to reference production URLs
@@ -77,6 +90,15 @@ gulp.task('clean', function() {
                 return fs.existsSync(data.path.replace(/\.js(\.map)?$/, '.ts')) ? data : undefined;
             }));
     return es.merge(distContents, generatedJs).pipe(clean());
+});
+
+gulp.task('serve', ['default'], function() {
+	browserSync.init({
+        server: "./dist"
+    });
+
+    gulp.watch("src/sass/*.scss", ['css']);
+    gulp.watch("src/**/*.html", ['html']).on('change', browserSync.reload);
 });
 
 gulp.task('default', ['html', 'js', 'css'], function(callback) {

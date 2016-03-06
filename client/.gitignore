@@ -9,6 +9,8 @@ dist/
 src/**/*.js
 src/**/*.js.map
 
+src/css/*-generated.css
+
 # ... except specific ones, which should be tracked
 !src/app/require.config.js
 !src/app/lib/*.js*
