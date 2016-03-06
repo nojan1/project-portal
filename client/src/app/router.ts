@@ -20,6 +20,7 @@ module router {
 
     var allRoutes = [
         { url: '',          params: { page: 'home-page' } },
+        { url: 'project/{projectId}', params: { page: 'project-page'} },
         { url: 'about',     params: { page: 'about-page' } }
     ];
 

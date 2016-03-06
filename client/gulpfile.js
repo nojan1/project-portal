@@ -19,6 +19,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
             'requireLib',
             'components/nav-bar/nav-bar',
             'components/home-page/home',
+			'components/project-page/project-page',
             'text!components/about-page/about.html'
         ],
         insertRequire: ['app/startup'],

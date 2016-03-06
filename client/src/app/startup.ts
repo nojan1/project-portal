@@ -12,6 +12,9 @@ ko.components.register('about-page', {
   template: { require: 'text!components/about-page/about.html' }
 });
 
+ko.components.register('project-page', { require: 'components/project-page/project-page' });
+
+
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
 
 // Start the application
