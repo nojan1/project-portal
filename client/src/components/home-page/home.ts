@@ -25,6 +25,7 @@ export class viewModel {
     }
     
     public openProject = (project: ps.Project) => {
-        alert(project.projectId);
+        // alert(project.projectId);
+        window.location.href = "#project/" + project.projectId;
     }
 }
