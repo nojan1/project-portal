@@ -1,1 +1,28 @@
 <h2 data-bind='text: message'>project-page</h2>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#notes-tab" aria-controls="home" role="tab" data-toggle="tab">Notes</a></li>
+    <li role="presentation"><a href="#files" aria-controls="profile" role="tab" data-toggle="tab">Files</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="notes-tab">
+        <div class="note-contents-container">
+            <h2 data-bind="text: selectedNote() ? selectedNote().noteName : ''"></h2>
+            <div data-bind="html: noteContentsMarkdown()"></div>
+        </div>
+        
+        <div>
+            <ul data-bind="foreach: notes">
+                <li>
+                    <a data-bind="click: $parent.selectNote, text: noteName"></a>
+                </li>
+            </ul>    
+        </div>
+    </div>
+    
+    <div role="tabpanel" class="tab-pane" id="files">
+        
+    </div>
+  </div>

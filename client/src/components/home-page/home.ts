@@ -12,7 +12,7 @@ export class viewModel {
     constructor(){
         var service = new ps.ProjectService();
         service.getProjects().then(p => {
-            ko.utils.arrayPushAll(this.projects, p);
+            this.projects(p);
         });
     }
     
