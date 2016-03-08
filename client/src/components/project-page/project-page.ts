@@ -1,7 +1,7 @@
 /// <amd-dependency path="text!./project-page.html" />
 import ko = require("knockout");
 export var template: string = require("text!./project-page.html");
-
+import md = require("markdown-it");
 import ns = require('../../services/notes.service');
 
 export class viewModel {
@@ -12,7 +12,10 @@ export class viewModel {
 
     public noteContentsMarkdown = ko.computed<string>(() => {
         if(this.selectedNote()){
-            return "Markdown: " + this.selectedNote().noteContent; 
+            return md({
+                        linkify: true,
+                        typographer: true
+                    }).render(this.selectedNote().noteContent); 
        }else{
            return "";
        }
