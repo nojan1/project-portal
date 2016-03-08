@@ -53,7 +53,7 @@ gulp.task('js', ['ts'], function () {
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
 gulp.task('css', ['sass'], function () {
-    var bowerCss = gulp.src('src/bower_modules/components-bootstrap/css/bootstrap.min.css')
+    var bowerCss = gulp.src('src/css/bootstrap-override.min.css') //'src/bower_modules/components-bootstrap/css/bootstrap.min.css'
             .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
         appCss = gulp.src('src/css/*.css'),
         combinedCss = es.concat(bowerCss, appCss).pipe(concat('css.css')),
