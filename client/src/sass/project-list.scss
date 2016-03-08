@@ -1,0 +1,10 @@
+.project-list-table {
+    margin-top: 5px;
+    
+    tbody {
+        tr:hover {
+            cursor:pointer;
+            background-color: darkgray;
+        }
+    }
+}

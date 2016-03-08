@@ -8,29 +8,55 @@ export class viewModel {
 
     public message = ko.observable("Hello from the project-page component!");
     public notes = ko.observableArray<ns.Note>();
-    public selectedNote = ko.observable<ns.Note>();
+    public selectedNote = ko.observable({
+        noteId: '',
+        noteName: ko.observable<string>(),
+        noteContent: ko.observable<string>()  
+    });
+
+    public inEditMode = ko.observable(false);
 
     public noteContentsMarkdown = ko.computed<string>(() => {
-        if(this.selectedNote()){
+        if(this.selectedNote() && this.selectedNote().noteContent()){
             return md({
                         linkify: true,
                         typographer: true
-                    }).render(this.selectedNote().noteContent); 
+                    }).render(this.selectedNote().noteContent()); 
        }else{
            return "";
        }
     }, this);
 
     public selectNote = (note: ns.Note) => {
-        this.selectedNote(note);
+        this.selectedNote().noteId = note.noteId;
+        this.selectedNote().noteName(note.noteName);
+        this.selectedNote().noteContent(note.noteContent);
+    }
+
+    public enterEditMode = () => {
+        this.inEditMode(true);
+    }
+
+    public saveChanges = () => {
+        if(this.selectedNote().noteId){
+            //Edit
+            // let noteToUpdate = ko.utils.arrayFirst(this.notes(), x => x.noteId == this.selectedNote().noteId);
+            // noteToUpdate.noteName = this.selectedNote().noteName();
+            // noteToUpdate.noteContent = this.selectedNote().noteContent();
+        }else{
+            //New
+            
+        }
+        
+        this.inEditMode(false);
     }
 
     constructor (params: any) {
-        this.message("Displaying project with id: " + params.projectId);
+        this.message(params.projectId);
         
         new ns.NoteService().getNotes(params.projectId).then((noteSections) => {
             this.notes(noteSections[0].nodes);
-            this.selectedNote(noteSections[0].nodes[0]);
+            this.selectNote(noteSections[0].nodes[0]);
         });
     }
 

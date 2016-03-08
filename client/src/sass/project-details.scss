@@ -1,0 +1,27 @@
+.project-details-tabs {
+    margin-top:5px;
+}
+
+.tab-content {
+    .row {
+        margin-top:5px;
+    }
+}
+
+.note-contents-container {
+    border-left: 1px solid darkgray;
+    
+    table {
+        width: 100%;
+    }
+}
+
+.note-list-container {
+    button{
+        margin-bottom:5px;
+    }
+    
+    a:hover {
+        cursor: pointer;
+    }
+}

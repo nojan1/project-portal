@@ -1,6 +1,6 @@
 <h2 data-bind='text: message'>project-page</h2>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs project-details-tabs" role="tablist">
     <li role="presentation" class="active"><a data-target="#notes-tab" aria-controls="home" role="tab" data-toggle="tab">Notes</a></li>
     <li role="presentation"><a data-target="#files" aria-controls="profile" role="tab" data-toggle="tab">Files</a></li>
   </ul>
@@ -9,17 +9,53 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="notes-tab">
         <div class="row">
-            <div class="note-contents-container col-md-10">
-                <h2 data-bind="text: selectedNote() ? selectedNote().noteName : ''"></h2>
-                <div data-bind="html: noteContentsMarkdown()"></div>
-            </div>
-            
-            <div class="col-md-2">
+             <div class="note-list-container col-md-3">
+                 <button class="btn btn-default pull-right">
+                     New note
+                 </button>
+                 <div class="clearfix"></div>
+                 
                 <ul data-bind="foreach: notes">
                     <li>
                         <a data-bind="click: $parent.selectNote, text: noteName"></a>
                     </li>
                 </ul>    
+            </div>
+            
+            <div class="note-contents-container col-md-9" data-bind="visible: !inEditMode()">
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <button type="button" class="btn btn-primary" data-bind="click: enterEditMode()">
+                        Edit
+                    </button>
+                </div>
+                
+                <h2 data-bind="text: selectedNote().noteName"></h2>
+                <div data-bind="html: noteContentsMarkdown()"></div>
+            </div>
+            
+            <div class="note-contents-container col-md-9" data-bind="visible: inEditMode()">
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <button type="button" class="btn btn-danger">
+                        Delete
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+                
+                <form>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" data-bind="textInput: selectedNote().noteName">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contents</label>
+                        <textarea class="form-control" data-bind="textInput: selectedNote().noteContent" rows="10"></textarea>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" data-bind="click: saveChanges()">
+                        Spara ändringar
+                    </button>
+                </form>
             </div>
         </div>
     </div>
