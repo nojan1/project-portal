@@ -26,8 +26,8 @@ export class viewModel {
         this.message("Displaying project with id: " + params.projectId);
         
         new ns.NoteService().getNotes(params.projectId).then((noteSections) => {
-            this.notes(noteSections[0].notes);
-            this.selectedNote(noteSections[0].notes[0]);
+            this.notes(noteSections[0].nodes);
+            this.selectedNote(noteSections[0].nodes[0]);
         });
     }
 

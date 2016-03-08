@@ -1,18 +1,12 @@
 import $ = require("jquery");
+import common = require("./common");
 
 export interface File {
-    noteId: string;
-    noteName: string;
-    noteContent: string;
-}
-
-export interface Folder {
-    files: File[];
-    folder: Folder[]
+    fileName: string;
 }
 
 export class FileService {
-    getFileListing(projectId: string) : JQueryPromise<Folder[]>{
+    getFileListing(projectId: string) : JQueryPromise<common.TreeItem<File>[]>{
         var dfd = $.Deferred();
         
         dfd.resolve([

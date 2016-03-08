@@ -1,4 +1,5 @@
 import $ = require("jquery");
+import common = require("./common");
 
 export interface Note {
     noteId: string;
@@ -6,20 +7,14 @@ export interface Note {
     noteContent: string;
 }
 
-export interface NoteSection {
-    sectionName: string;
-    notes: Note[];
-    children: NoteSection[]
-}
-
 export class NoteService {
-    getNotes(projectId: string) : JQueryPromise<NoteSection[]>{
+    getNotes(projectId: string) : JQueryPromise<common.TreeItem<Note>[]>{
         var dfd = $.Deferred();
         
         dfd.resolve([
             {
-                sectionName: 'Section 1',
-                notes: [
+                title: 'Section 1',
+                nodes: [
                     {
                         noteId: 'note1',
                         noteName: 'Note 1',
