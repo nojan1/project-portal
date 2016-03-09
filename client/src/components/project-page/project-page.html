@@ -15,10 +15,8 @@
             </div>
             
             <div class="col-md-2">
-                <ul data-bind="foreach: notes">
-                    <li>
-                        <a data-bind="click: $parent.selectNote, text: noteName"></a>
-                    </li>
+                <ul data-bind="tree: notes">
+                    <a data-bind="click: $parent.selectNote, text: noteName"></a>
                 </ul>    
             </div>
         </div>
