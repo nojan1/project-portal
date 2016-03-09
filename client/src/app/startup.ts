@@ -3,6 +3,8 @@ import ko = require("knockout");
 import bootstrap = require("bootstrap");
 import router = require("./router");
 
+import tb = require("../bindings/treeBinding");
+
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
 ko.components.register('home-page', { require: 'components/home-page/home' });
@@ -16,6 +18,9 @@ ko.components.register('project-page', { require: 'components/project-page/proje
 
 
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
+
+// Setup custom bindings
+new tb.TreeBinding().Register(ko);
 
 // Start the application
 ko.applyBindings({ route: router.currentRoute });

@@ -2,19 +2,21 @@
 import ko = require("knockout");
 export var template: string = require("text!./project-page.html");
 import md = require("markdown-it");
+import tb = require('../../services/common');
 import ns = require('../../services/notes.service');
 
 export class viewModel {
 
     public message = ko.observable("Hello from the project-page component!");
-    public notes = ko.observableArray<ns.Note>();
+    
+    public inEditMode = ko.observable(false);
+    
+    public notes = ko.observableArray<tb.TreeItem<ns.Note>>();
     public selectedNote = ko.observable({
         noteId: '',
         noteName: ko.observable<string>(),
         noteContent: ko.observable<string>()  
     });
-
-    public inEditMode = ko.observable(false);
 
     public noteContentsMarkdown = ko.computed<string>(() => {
         if(this.selectedNote() && this.selectedNote().noteContent()){
@@ -55,7 +57,7 @@ export class viewModel {
         this.message(params.projectId);
         
         new ns.NoteService().getNotes(params.projectId).then((noteSections) => {
-            this.notes(noteSections[0].nodes);
+            this.notes(noteSections);
             this.selectNote(noteSections[0].nodes[0]);
         });
     }

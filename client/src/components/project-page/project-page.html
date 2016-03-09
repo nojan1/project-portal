@@ -9,6 +9,7 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="notes-tab">
         <div class="row">
+
              <div class="note-list-container col-md-3">
                  <button class="btn btn-default pull-right">
                      New note
@@ -19,9 +20,16 @@
                     <li>
                         <a data-bind="click: $parent.selectNote, text: noteName"></a>
                     </li>
-                </ul>    
-            </div>
-            
+                </ul>
+                
+                <!--<div class="col-md-2">
+                    <ul data-bind="tree: notes">
+                        <a data-bind="click: $parent.selectNote, text: noteName"></a>
+                    </ul>    
+                 </div>
+                -->
+             </div>
+
             <div class="note-contents-container col-md-9" data-bind="visible: !inEditMode()">
                 <div class="btn-toolbar pull-right" role="toolbar">
                     <button type="button" class="btn btn-primary" data-bind="click: enterEditMode()">
