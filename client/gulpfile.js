@@ -112,7 +112,12 @@ gulp.task('serve', ['default'], function() {
     // gulp.watch("src/**/*.html", ['html', 'js']).on('change', browserSync.reload);
 });
 
-gulp.task('default', ['html', 'js', 'css'], function(callback) {
+gulp.task('images', function(){
+	return gulp.src('images/**')
+		.pipe(gulp.dest('dist/images/'));
+});
+
+gulp.task('default', ['html', 'js', 'css', 'images'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });

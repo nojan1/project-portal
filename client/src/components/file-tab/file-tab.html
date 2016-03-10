@@ -1,3 +1,19 @@
-<h2>file-tab</h2>
-
-<p data-bind='text: message'></p>
+<div class="row file-container">
+    <!-- ko ifnot: isRoot -->
+        
+    <!-- /ko -->
+    
+    <!-- ko foreach: currentFolder().children -->   
+        <div class="col-xs-2 file-icon" data-bind="click: navigate">
+            <img src="images/mimetypes/inode-directory.png">
+            <label data-bind="text: title"></label>    
+        </div>
+    <!-- /ko -->
+    
+    <!-- ko foreach: currentFolder().nodes -->   
+        <div class="col-xs-2 file-icon">
+            <img data-bind="mimeicon: mimeType">
+            <label data-bind="text: fileName"></label>    
+        </div>
+    <!-- /ko -->
+</div>
