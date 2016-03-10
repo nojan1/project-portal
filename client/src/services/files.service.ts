@@ -26,6 +26,22 @@ export class FileService {
                                 fileName: "File4.txt",
                                 mimeType: "text/plain"
                             }
+                        ],
+                        children: [
+                            {
+                                title: "Sub folder 1",
+                                nodes: [
+                                    {
+                                        fileName: "File3.txt",
+                                        mimeType: "text/plain"
+                                    },
+                                    {
+                                        fileName: "File4.txt",
+                                        mimeType: "text/plain"
+                                    }
+                                ],
+                                children: []
+                            }
                         ]
                     },
                     {

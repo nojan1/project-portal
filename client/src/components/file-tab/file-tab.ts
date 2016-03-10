@@ -7,17 +7,22 @@ import common = require("../../services/common");
 
 export class viewModel {
     private folderTree: common.TreeItem<fs.File>;
+    private folderHistory: common.TreeItem<fs.File>[];
     
     public currentFolder = ko.observable<common.TreeItem<fs.File>>();
-    public isRoot = ko.observable<boolean>(true);
+    public isRoot = ko.computed(() => {
+        this.currentFolder();
+        return !this.folderHistory || this.folderHistory.length == 0;
+    }, this);
     
     public navigate = (folder: common.TreeItem<fs.File>) => {
+        this.folderHistory.push(this.currentFolder());
         this.currentFolder(folder);
-        this.isRoot(false);
     }
     
     public navigateParent = () => {
-        
+        var parentFolder = this.folderHistory.pop();
+        this.currentFolder(parentFolder);
     }
     
     public openFile = (file: fs.File) => {
@@ -28,6 +33,8 @@ export class viewModel {
         new fs.FileService().getFileListing(params.projectId).then((folderTree) => {
             this.folderTree = folderTree;
             this.currentFolder(this.folderTree);
+            
+            this.folderHistory = [];
         });
     }
 
