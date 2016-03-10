@@ -4,6 +4,7 @@ import bootstrap = require("bootstrap");
 import router = require("./router");
 
 import tb = require("../bindings/treeBinding");
+import md = require("../bindings/markdownBinding");
 
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
@@ -15,12 +16,16 @@ ko.components.register('about-page', {
 });
 
 ko.components.register('project-page', { require: 'components/project-page/project-page' });
+ko.components.register('note-tab', { require: 'components/note-tab/note-tab' });
+ko.components.register('file-tab', { require: 'components/file-tab/file-tab' });
+
 
 
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
 
 // Setup custom bindings
 new tb.TreeBinding().Register(ko);
+new md.MarkdownBinding().Register(ko);
 
 // Start the application
 ko.applyBindings({ route: router.currentRoute });

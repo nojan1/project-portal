@@ -48,7 +48,7 @@ export class TreeBinding implements cb.CustomBinding {
    
    private init = (element, valueAccessor, allBindings, viewModel, bindingContext) =>{
        this.nodeTemplate = $(element).html();
-       $(element).html():
+       $(element).html();
        this.buildTree($(element), ko.unwrap(valueAccessor)()());
    }
    

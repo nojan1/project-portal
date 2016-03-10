@@ -1,7 +1,6 @@
 /// <amd-dependency path="text!./project-page.html" />
 import ko = require("knockout");
 export var template: string = require("text!./project-page.html");
-import md = require("markdown-it");
 import tb = require('../../services/common');
 import ns = require('../../services/notes.service');
 
@@ -17,18 +16,7 @@ export class viewModel {
         noteName: ko.observable<string>(),
         noteContent: ko.observable<string>()  
     });
-
-    public noteContentsMarkdown = ko.computed<string>(() => {
-        if(this.selectedNote() && this.selectedNote().noteContent()){
-            return md({
-                        linkify: true,
-                        typographer: true
-                    }).render(this.selectedNote().noteContent()); 
-       }else{
-           return "";
-       }
-    }, this);
-
+    
     public selectNote = (note: ns.Note) => {
         this.selectedNote().noteId = note.noteId;
         this.selectedNote().noteName(note.noteName);

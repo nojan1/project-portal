@@ -16,7 +16,7 @@
                  </button>
                  <div class="clearfix"></div>
                  
-                <ul data-bind="foreach: notes">
+                <ul data-bind="foreach: notes()[0].nodes">
                     <li>
                         <a data-bind="click: $parent.selectNote, text: noteName"></a>
                     </li>
@@ -38,7 +38,7 @@
                 </div>
                 
                 <h2 data-bind="text: selectedNote().noteName"></h2>
-                <div data-bind="html: noteContentsMarkdown()"></div>
+                <div data-bind="markdown: selectedNote().noteContent"></div>
             </div>
             
             <div class="note-contents-container col-md-9" data-bind="visible: inEditMode()">
