@@ -8,7 +8,7 @@ export interface File {
 }
 
 export class FileService {
-    getFileListing(projectId: string) : JQueryPromise<common.TreeItem<File>>{
+    public getFileListing(projectId: string) : JQueryPromise<common.TreeItem<File>>{
         var dfd = $.Deferred();
         
         dfd.resolve(
@@ -109,5 +109,13 @@ export class FileService {
             });
         
         return dfd.promise();
+    }
+    
+    public deleteFile = () => {
+        
+    }
+    
+    public addFile = () => {
+            
     }
 }

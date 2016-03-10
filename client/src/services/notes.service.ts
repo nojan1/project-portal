@@ -8,7 +8,7 @@ export interface Note {
 }
 
 export class NoteService {
-    getNotes(projectId: string) : JQueryPromise<common.TreeItem<Note>[]>{
+    public getNotes(projectId: string) : JQueryPromise<common.TreeItem<Note>[]>{
         var dfd = $.Deferred();
         
         dfd.resolve([
@@ -41,5 +41,17 @@ export class NoteService {
             ]);
         
         return dfd.promise();
+    }
+    
+    public newNote = () => {
+        
+    }
+    
+    public updateNote = (note: Note) => {
+        
+    }
+    
+    public deleteNote = (note: Note) => {
+        
     }
 }
