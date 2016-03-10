@@ -17,6 +17,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         },
         include: [
             'requireLib',
+			'bower_modules/components-bootstrap/js/bootstrap.min',
             'components/nav-bar/nav-bar',
             'components/home-page/home',
 			'components/project-page/project-page',

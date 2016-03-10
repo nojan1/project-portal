@@ -1,23 +1,17 @@
 <h2 data-bind='text: message'>project-page</h2>
 
 <ul class="nav nav-tabs project-details-tabs" role="tablist">
-    <li role="presentation" class="active"><a data-target="#notes-tab" aria-controls="home" role="tab" data-toggle="tab">Notes</a></li>
-    <li role="presentation"><a data-target="#files" aria-controls="profile" role="tab" data-toggle="tab">Files</a></li>
+    <li role="presentation" class="active"><a data-bind="tab: '#notes-tab'">Notes</a></li>
+    <li role="presentation"><a data-bind="tab: '#files'">Files</a></li>
   </ul>
 
   <!-- Tab panes -->
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="notes-tab">
-       <note-tab params="projectId: projectId()"></note-tab>
-    </div>
-    
-    <div role="tabpanel" class="tab-pane" id="files">
-        <file-tab params="projectId: projectId()"></file-tab>
-    </div>
-  </div>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="notes-tab">
+    <note-tab params="projectId: projectId()"></note-tab>
+</div>
 
-<script>
-  $(document).ready(function(){
-      $('.nav-tabs a').tab();
-  });  
-</script>
+<div role="tabpanel" class="tab-pane" id="files">
+    <file-tab params="projectId: projectId()"></file-tab>
+</div>
+</div>
