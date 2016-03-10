@@ -29,7 +29,7 @@ export class FileService {
                         ]
                     },
                     {
-                        title: "Sub folder",
+                        title: "Sub folder 1",
                         nodes: [
                             {
                                 fileName: "File3.txt",
@@ -42,7 +42,7 @@ export class FileService {
                         ]
                     },
                     {
-                        title: "Sub folder",
+                        title: "Sub folder 2",
                         nodes: [
                             {
                                 fileName: "File3.txt",
@@ -70,7 +70,8 @@ export class FileService {
                     },
                     {
                         fileName: "File2.erb",
-                        mimeType: "text/plain"
+                        mimeType: "text/plain",
+                        fullPath: "http://google.se"
                     },
                     {
                         fileName: "File1.css",

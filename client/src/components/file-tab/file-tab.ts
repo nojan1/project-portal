@@ -12,8 +12,16 @@ export class viewModel {
     public isRoot = ko.observable<boolean>(true);
     
     public navigate = (folder: common.TreeItem<fs.File>) => {
-        currentFolder(folder);
-        isRoot(false);
+        this.currentFolder(folder);
+        this.isRoot(false);
+    }
+    
+    public navigateParent = () => {
+        
+    }
+    
+    public openFile = (file: fs.File) => {
+        window.open(file.fullPath);
     }
     
     constructor (params: any) {

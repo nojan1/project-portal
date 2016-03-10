@@ -1,0 +1,23 @@
+.file-icon {
+    width: 100px;
+    height: 90px;
+    margin-right: 5px;
+    text-align:center;
+    
+    img {
+        margin: 10 auto;
+        width:48px;
+    }
+    
+    label {
+        overflow: none;
+    }
+    
+    :hover {
+        cursor: pointer;
+    }
+}
+
+.file-container {
+    padding: 10px;
+}
