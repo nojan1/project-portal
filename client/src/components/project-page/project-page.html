@@ -8,68 +8,11 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="notes-tab">
-        <div class="row">
-
-             <div class="note-list-container col-md-3">
-                 <button class="btn btn-default pull-right">
-                     New note
-                 </button>
-                 <div class="clearfix"></div>
-                 
-                <ul data-bind="foreach: notes()[0].nodes">
-                    <li>
-                        <a data-bind="click: $parent.selectNote, text: noteName"></a>
-                    </li>
-                </ul>
-                
-                <!--<div class="col-md-2">
-                    <ul data-bind="tree: notes">
-                        <a data-bind="click: $parent.selectNote, text: noteName"></a>
-                    </ul>    
-                 </div>
-                -->
-             </div>
-
-            <div class="note-contents-container col-md-9" data-bind="visible: !inEditMode()">
-                <div class="btn-toolbar pull-right" role="toolbar">
-                    <button type="button" class="btn btn-primary" data-bind="click: enterEditMode()">
-                        Edit
-                    </button>
-                </div>
-                
-                <h2 data-bind="text: selectedNote().noteName"></h2>
-                <div data-bind="markdown: selectedNote().noteContent"></div>
-            </div>
-            
-            <div class="note-contents-container col-md-9" data-bind="visible: inEditMode()">
-                <div class="btn-toolbar pull-right" role="toolbar">
-                    <button type="button" class="btn btn-danger">
-                        Delete
-                    </button>
-                </div>
-                <div class="clearfix"></div>
-                
-                <form>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" data-bind="textInput: selectedNote().noteName">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Contents</label>
-                        <textarea class="form-control" data-bind="textInput: selectedNote().noteContent" rows="10"></textarea>
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary" data-bind="click: saveChanges()">
-                        Spara ändringar
-                    </button>
-                </form>
-            </div>
-        </div>
+       <note-tab params="projectId: projectId()"></note-tab>
     </div>
     
     <div role="tabpanel" class="tab-pane" id="files">
-        
+        <file-tab params="projectId: projectId()"></file-tab>
     </div>
   </div>
 

@@ -2,12 +2,48 @@
 import ko = require("knockout");
 export var template: string = require("text!./note-tab.html");
 
-export class viewModel {
+import tb = require('../../services/common');
+import ns = require('../../services/notes.service');
 
-    public message = ko.observable("Hello from the note-tab component!");
+export class viewModel {
+    public inEditMode = ko.observable(false);
+    
+    public notes = ko.observableArray<tb.TreeItem<ns.Note>>();
+    public selectedNote = ko.observable({
+        noteId: '',
+        noteName: ko.observable<string>(),
+        noteContent: ko.observable<string>()  
+    });
+    
+    public selectNote = (note: ns.Note) => {
+        this.selectedNote().noteId = note.noteId;
+        this.selectedNote().noteName(note.noteName);
+        this.selectedNote().noteContent(note.noteContent);
+    }
+
+    public enterEditMode = () => {
+        this.inEditMode(true);
+    }
+
+    public saveChanges = () => {
+        if(this.selectedNote().noteId){
+            //Edit
+            // let noteToUpdate = ko.utils.arrayFirst(this.notes(), x => x.noteId == this.selectedNote().noteId);
+            // noteToUpdate.noteName = this.selectedNote().noteName();
+            // noteToUpdate.noteContent = this.selectedNote().noteContent();
+        }else{
+            //New
+            
+        }
+        
+        this.inEditMode(false);
+    }
 
     constructor (params: any) {
-
+        new ns.NoteService().getNotes(params.projectId).then((noteSections) => {
+            this.notes(noteSections);
+            this.selectNote(noteSections[0].nodes[0]);
+        });
     }
 
     public dispose() {
