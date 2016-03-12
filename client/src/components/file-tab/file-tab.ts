@@ -9,6 +9,10 @@ export class viewModel {
     private folderTree: common.TreeItem<fs.File>;
     private folderHistory: common.TreeItem<fs.File>[];
     
+    public uploadConfig = ko.observable({
+        
+    });
+    
     public currentFolder = ko.observable<common.TreeItem<fs.File>>();
     public isRoot = ko.computed(() => {
         this.currentFolder();

@@ -6,5 +6,6 @@
 /// <reference path="../definitions/crossroads/crossroads.d.ts" />
 /// <reference path="../definitions/hasher/hasher.d.ts" />
 /// <reference path="../definitions/markdown-it.d.ts" />
+/// <reference path="../definitions/jquery-file-upload.d.ts" />
 declare var require;
 declare var define;

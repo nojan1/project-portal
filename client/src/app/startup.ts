@@ -7,6 +7,7 @@ import tb = require("../bindings/treeBinding");
 import md = require("../bindings/markdownBinding");
 import tab = require("../bindings/tabBinding");
 import mimeicon = require("../bindings/mimetypeIconBinding");
+import upload = require("../bindings/uploadBinding");
 
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
@@ -30,6 +31,7 @@ new tb.TreeBinding().Register(ko);
 new md.MarkdownBinding().Register(ko);
 new tab.TabBinding().Register(ko);
 new mimeicon.MimetypeIconBinding().Register(ko);
+new upload.UploadBinding().Register(ko);
 
 // Start the application
 ko.applyBindings({ route: router.currentRoute });

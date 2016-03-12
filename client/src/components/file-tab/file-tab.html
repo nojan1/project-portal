@@ -1,6 +1,13 @@
 <div class="file-container">
     <span id="current-path" data-bind="text: currentPath"></span>
     
+    <span class="btn btn-success fileinput-button pull-right">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select files...</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]" multiple data-bind="upload: uploadConfig">
+    </span>
+    
     <div class="row">
         <!-- ko ifnot: isRoot -->
             <div class="col-xs-2 file-icon" data-bind="click: navigateParent">
