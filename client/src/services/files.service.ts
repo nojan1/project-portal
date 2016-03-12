@@ -13,7 +13,7 @@ export class FileService {
         
         dfd.resolve(
             {
-                title: "root",
+                title: ".",
                 children: [
                     {
                         title: "Sub folder",

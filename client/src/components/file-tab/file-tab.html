@@ -1,23 +1,27 @@
-<div class="row file-container">
-    <!-- ko ifnot: isRoot -->
-        <div class="col-xs-2 file-icon" data-bind="click: navigateParent">
-            <img src="images/mimetypes/inode-directory.png">
-            <br />
-            <label>..</label>    
-        </div>
-    <!-- /ko -->
+<div class="file-container">
+    <span id="current-path" data-bind="text: currentPath"></span>
     
-    <!-- ko foreach: currentFolder().children -->   
-        <div class="col-xs-2 file-icon" data-bind="click: $parent.navigate">
-            <img src="images/mimetypes/inode-directory.png">
-            <label data-bind="text: title"></label>    
-        </div>
-    <!-- /ko -->
-    
-    <!-- ko foreach: currentFolder().nodes -->   
-        <div class="col-xs-2 file-icon" data-bind="click: $parent.openFile">
-            <img data-bind="mimeicon: mimeType">
-            <label data-bind="text: fileName"></label>    
-        </div>
-    <!-- /ko -->
+    <div class="row">
+        <!-- ko ifnot: isRoot -->
+            <div class="col-xs-2 file-icon" data-bind="click: navigateParent">
+                <img src="images/mimetypes/inode-directory.png">
+                <br />
+                <label>..</label>    
+            </div>
+        <!-- /ko -->
+        
+        <!-- ko foreach: currentFolder().children -->   
+            <div class="col-xs-2 file-icon" data-bind="click: $parent.navigate">
+                <img src="images/mimetypes/inode-directory.png">
+                <label data-bind="text: title"></label>    
+            </div>
+        <!-- /ko -->
+        
+        <!-- ko foreach: currentFolder().nodes -->   
+            <div class="col-xs-2 file-icon" data-bind="click: $parent.openFile">
+                <img data-bind="mimeicon: mimeType">
+                <label data-bind="text: fileName"></label>    
+            </div>
+        <!-- /ko -->
+    </div>
 </div>

@@ -15,6 +15,16 @@ export class viewModel {
         return !this.folderHistory || this.folderHistory.length == 0;
     }, this);
     
+    public currentPath = ko.computed(() => {
+        this.currentFolder();
+        
+        if(this.folderHistory == null || this.folderHistory.length == 0){
+            return "./";
+        }else{
+            return this.folderHistory.map((item) => item.title).join("/") + "/" + this.currentFolder().title;
+        }
+    }, this);
+    
     public navigate = (folder: common.TreeItem<fs.File>) => {
         this.folderHistory.push(this.currentFolder());
         this.currentFolder(folder);
