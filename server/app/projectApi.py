@@ -1,4 +1,4 @@
-from flask.ext.restful import Resource, fields, marshal
+from flask.ext.restful import Resource, fields, marshal, reqparse
 from projectRepository import *
 
 project_fields = {
@@ -12,4 +12,14 @@ class ProjectListAPI(Resource):
         super(ProjectListAPI, self).__init__()
         
      def get(self):
-        return {'projects': [marshal(project, project_fields) for project in ProjectRepository().getProjects()]}
+        return [marshal(project, project_fields) for project in ProjectRepository().getProjects()]
+        
+     def post(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('projectName', type = str, required = True, location = 'json')
+        
+        args = self.reqparse.parse_args()
+        print(args)
+        project = ProjectRepository().createProject(args["projectName"])
+        
+        return marshal(project, project_fields)

@@ -9,8 +9,8 @@ export class viewModel {
     private folderTree: common.TreeItem<fs.File>;
     private folderHistory: common.TreeItem<fs.File>[];
     
-    public uploadConfig = ko.observable({
-        
+    public uploadConfig = ko.observable<any>({
+        url: "project/" + this.params.projectId + "/file/add"
     });
     
     public currentFolder = ko.observable<common.TreeItem<fs.File>>();
@@ -43,7 +43,7 @@ export class viewModel {
         window.open(file.fullPath);
     }
     
-    constructor (params: any) {
+    constructor (private params: any) {
         new fs.FileService().getFileListing(params.projectId).then((folderTree) => {
             this.folderTree = folderTree;
             this.currentFolder(this.folderTree);

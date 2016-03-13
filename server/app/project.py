@@ -35,7 +35,7 @@ class Project(object):
         with open(infoFilePath, "w") as outfile:
             json.dump({"projectName": projectName}, outfile, indent = 4)
             
-        self._repo.index.add(".projectinfo.json")
+        self._repo.git.add(u=True)
         self._repo.index.commit("initial commit")
             
         

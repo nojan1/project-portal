@@ -33,5 +33,11 @@ new tab.TabBinding().Register(ko);
 new mimeicon.MimetypeIconBinding().Register(ko);
 new upload.UploadBinding().Register(ko);
 
+$.ajaxSetup({
+    beforeSend: (jxhr: JQueryXHR, ajaxSettings: JQueryAjaxSettings) => {
+        ajaxSettings.url = "http://localhost:5000" + ajaxSettings.url; //TODO: read from config
+    }
+})
+
 // Start the application
 ko.applyBindings({ route: router.currentRoute });

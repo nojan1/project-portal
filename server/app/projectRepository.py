@@ -16,7 +16,7 @@ class ProjectRepository(object):
         projectId = projectName.replace(" ", "-")
         full_path = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
         
-        if os.path.exist(full_path):
+        if os.path.exists(full_path):
             raise Exception("Project path already exist")
             
         os.mkdir(full_path)

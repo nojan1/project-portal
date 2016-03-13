@@ -15,13 +15,25 @@ export class viewModel {
             this.projects(p);
         });
     }
-    
-    public message = ko.observable("Welcome to project-portal!");
 
+    public displayNewProjectForm = ko.observable<boolean>(false);
+    public newProjectName = ko.observable<string>("");
+    
     public projects = ko.observableArray<ps.Project>();
 
     public newProject = () => {
-        alert('create new project');
+        new ps.ProjectService().addProject(this.newProjectName())
+            .done((project) => {
+                this.projects.push(project);
+                
+                this.displayNewProjectForm(false);
+                this.newProjectName("");
+            })
+            .fail((jqXHR, textStatus, errorThrown) => {
+                alert("Error: " + errorThrown);
+                console.error(jqXHR);
+            })
+        
     }
     
     public openProject = (project: ps.Project) => {

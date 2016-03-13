@@ -1,9 +1,24 @@
 <h2>Projects</h2>
 
-<button class="btn btn-primary pull-right clearfix"
-        data-bind="click: newProject">
+<button class="btn btn-primary pull-right"
+        data-bind="click: function() { displayNewProjectForm(true); }">
         New project
 </button>
+
+<div class="clearfix"></div>
+
+<div class="row new-project-row clearfix" data-bind="visible: displayNewProjectForm">
+    <form data-bind="submit: newProject" class="form-inline">
+        <div class="form-group">
+            <label>Project name</label>
+            <input type="text" class="form-control" required data-bind="textInput: newProjectName">    
+        </div>
+        
+        <button type="submit" class="btn btn-primary pull-right">
+            Create new project    
+        </button>
+    </form>
+</div>
 
 <table class="table project-list-table">
     <thead>
