@@ -3,17 +3,21 @@ from flask.ext.restful import Api
 from flask_injector import FlaskInjector
 from injector import inject, Module, provides, singleton
 
-import config
+from configProvider import *
 from projectApi import *
 from projectRepository import ProjectRepository
 
+configProvider = FileConfigProvider("config.json")
+
 def configure_ext(binder):
+    binder.bind(ConfigProvider, to=configProvider, scope=singleton)
     binder.bind(ProjectRepository, to=ProjectRepository(), scope=singleton)
+    
 
 @inject(app=Flask)
 def configure_api(binder, app):
         api = Api(app)
-        api.add_resource(ProjectListAPI, config.API_PATH_PREFIX + "/projects")
+        api.add_resource(ProjectListAPI, configProvider.API_PATH_PREFIX + "/projects")
         
         binder.bind(Api, to=api, scope=singleton)
 
@@ -32,7 +36,7 @@ def main(debug):
         response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
         return response
 
-    FlaskInjector(app=app, modules=[configure_api, configure_ext])
+    FlaskInjector(app=app, modules=[configure_ext, configure_api])
     
     app.run(debug=debug)
     

@@ -1,3 +1,3 @@
-from pytest import *
+from projectTests import *
 
-assert 1 == 1
+test_creating_new_project_results_in_git_repo_being_created()

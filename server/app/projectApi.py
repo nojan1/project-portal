@@ -4,6 +4,8 @@ from projectRepository import *
 from flask_injector import FlaskInjector
 from injector import inject
 
+from configProvider import ConfigProvider
+
 project_fields = {
     'projectId': fields.String,
     'projectName': fields.String,
@@ -12,12 +14,14 @@ project_fields = {
 
 class ProjectListAPI(Resource):
      @inject(projectRepository=ProjectRepository)
-     def __init__(self, projectRepository):
-        self.projectRepository = projectRepository
+     @inject(configProvider=ConfigProvider)
+     def __init__(self, projectRepository, configProvider):
+        self.__projectRepository = projectRepository
+        self.__configProvider = configProvider
         super(ProjectListAPI, self).__init__()
         
      def get(self):
-        return [marshal(project, project_fields) for project in self.projectRepository.getProjects()]
+        return [marshal(project, project_fields) for project in self.__projectRepository.getProjects()]
         
      def post(self):
         self.reqparse = reqparse.RequestParser()
@@ -25,6 +29,6 @@ class ProjectListAPI(Resource):
         
         args = self.reqparse.parse_args()
         
-        project = self.projectRepository.createProject(args["projectName"])
+        project = self.__projectRepository.createProject(args["projectName"])
         
         return marshal(project, project_fields)

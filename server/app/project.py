@@ -1,8 +1,8 @@
 from git import Repo
-import config, os, json
+import os, json
 
 class Project(object):
-    def __init__(self, projectId, projectName = ""):
+    def __init__(self, config, projectId, projectName = ""):
         repoPath = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
     
         if os.path.exists(os.path.join(repoPath, ".git")):
