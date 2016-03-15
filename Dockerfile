@@ -1,11 +1,16 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update && apt-get install -y python git python-pip
 
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
+ADD "docker/startup.sh" "/startup.sh"
 
-ADD client/dist/ /usr/share/nginx/html
+RUN mkdir "/srv/{client,server}"
+ADD "client/dist" "/srv/client"
+ADD "server/" "srv/server"
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+RUN pip install -r "/srv/server/requirments.txt"
+
+VOLUME "/var/repos"
+
+EXPOSE [80,8080]
+CMD ["/startup.sh"]

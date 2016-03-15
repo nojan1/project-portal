@@ -1,3 +1,4 @@
 from app import main
 
-main(False)
+def application(env):
+	main(False)
