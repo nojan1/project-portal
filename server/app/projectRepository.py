@@ -27,6 +27,6 @@ class ProjectRepository(object):
             raise Exception("Project path already exist")
             
         os.mkdir(full_path)
-        return Project(projectId, projectName)
+        return Project(self.__config, projectId, projectName)
         
         
