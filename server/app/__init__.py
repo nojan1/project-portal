@@ -11,9 +11,8 @@ configProvider = FileConfigProvider("config.json")
 
 def configure_ext(binder):
     binder.bind(ConfigProvider, to=configProvider, scope=singleton)
-    binder.bind(ProjectRepository, to=ProjectRepository(), scope=singleton)
+    binder.bind(ProjectRepository, to=ProjectRepository(configProvider), scope=singleton)
     
-
 @inject(app=Flask)
 def configure_api(binder, app):
         api = Api(app)
