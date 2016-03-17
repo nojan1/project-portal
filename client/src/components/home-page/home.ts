@@ -10,18 +10,22 @@ import ps = require('../../services/projects.service');
 
 export class viewModel {
     constructor(){
+        this.isLoading(true);
         var service = new ps.ProjectService();
         service.getProjects().then(p => {
             this.projects(p);
+        }).always(() => {
+           this.isLoading(false); 
         });
     }
 
     public displayNewProjectForm = ko.observable<boolean>(false);
     public newProjectName = ko.observable<string>("");
-    
+    public isLoading = ko.observable<boolean>(false);
     public projects = ko.observableArray<ps.Project>();
 
     public newProject = () => {
+        this.isLoading(true);
         new ps.ProjectService().addProject(this.newProjectName())
             .done((project) => {
                 this.projects.push(project);
@@ -32,8 +36,9 @@ export class viewModel {
             .fail((jqXHR, textStatus, errorThrown) => {
                 alert("Error: " + errorThrown);
                 console.error(jqXHR);
-            })
-        
+            }).always(() => {
+                this.isLoading(false); 
+            });
     }
     
     public openProject = (project: ps.Project) => {
