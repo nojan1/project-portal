@@ -11,8 +11,9 @@ var require = {
         "signals":              "bower_modules/js-signals/dist/signals.min",
         "text":                 "bower_modules/requirejs-text/text",
         "markdown-it":          "bower_modules/markdown-it/dist/markdown-it.min",
-        "jquery-file-upload":   "bower_modules/blueimp-file-upload/js/jquery.fileupload.js",
-        "jquery-file-upload-iframe-transport":  "bower_modules/blueimp-file-upload/js/jquery.iframe-transport.js"
+        "jquery-file-upload":   "bower_modules/blueimp-file-upload/js/jquery.fileupload",
+        "jquery-file-upload-iframe-transport":  "bower_modules/blueimp-file-upload/js/jquery.iframe-transport",
+        "jquery.ui.widget": "bower_modules/blueimp-file-upload/js/vendor/jquery.ui.widget"
     },
     shim: {
         "bootstrap": { deps: ["jquery"] },
