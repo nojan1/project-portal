@@ -21,6 +21,8 @@ ko.components.register('about-page', {
 ko.components.register('project-page', { require: 'components/project-page/project-page' });
 ko.components.register('note-tab', { require: 'components/note-tab/note-tab' });
 ko.components.register('file-tab', { require: 'components/file-tab/file-tab' });
+ko.components.register('loading-indicator', { require: 'components/loading-indicator/loading-indicator' });
+
 
 
 
