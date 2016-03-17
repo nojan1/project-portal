@@ -16,6 +16,8 @@ test/**/*.js
 
 src/css/*-generated.css
 
+src/config.json
+
 # ... except specific ones, which should be tracked
 !src/app/require.config.js
 !src/app/lib/*.js*

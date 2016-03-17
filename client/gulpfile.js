@@ -117,7 +117,12 @@ gulp.task('images', function(){
 		.pipe(gulp.dest('dist/images/'));
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images'], function(callback) {
+gulp.task('copy-config', function(){
+	return gulp.src('src/config*.json')
+		.pipe(gulp.dest('dist/'));
+});
+
+gulp.task('default', ['html', 'js', 'css', 'images', 'copy-config'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });

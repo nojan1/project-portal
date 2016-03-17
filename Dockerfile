@@ -14,7 +14,7 @@ RUN pip3 install -r "/srv/server/requirments.txt"
 
 RUN mkdir "/var/repos"
 VOLUME "/var/repos"
-ENV API_BASE_DOMAIN = ""
+ENV API_BASE_DOMAIN ""
 
 EXPOSE 3031
 EXPOSE 3032

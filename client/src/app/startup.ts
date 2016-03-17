@@ -33,11 +33,16 @@ new tab.TabBinding().Register(ko);
 new mimeicon.MimetypeIconBinding().Register(ko);
 new upload.UploadBinding().Register(ko);
 
-$.ajaxSetup({
-    beforeSend: (jxhr: JQueryXHR, ajaxSettings: JQueryAjaxSettings) => {
-        ajaxSettings.url = "http://localhost:5000" + ajaxSettings.url; //TODO: read from config
-    }
-})
+$.getJSON("config.json")
+    .done((configValues:any) => {
+        $.ajaxSetup({
+            beforeSend: (jxhr: JQueryXHR, ajaxSettings: JQueryAjaxSettings) => {
+                ajaxSettings.url = configValues.API_BASE_DOMAIN + ajaxSettings.url;
+            }
+        })
 
-// Start the application
-ko.applyBindings({ route: router.currentRoute });
+        // Start the application
+        ko.applyBindings({ route: router.currentRoute });
+    })
+
+

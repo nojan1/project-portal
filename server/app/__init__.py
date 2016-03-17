@@ -37,7 +37,7 @@ def main(debug):
 
     FlaskInjector(app=app, modules=[configure_ext, configure_api])
     
-    app.run(debug=debug)
+    return app
     
 if __name__ == "__main__":
-    main(True)
+    main()(True)
