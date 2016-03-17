@@ -21,7 +21,7 @@ class ProjectListAPI(Resource):
         super(ProjectListAPI, self).__init__()
         
      def get(self):
-        return [marshal(project, project_fields) for project in self.__projectRepository.getProjects()]
+        return [marshal(project.getFields(), project_fields) for project in self.__projectRepository.getProjects()]
         
      def post(self):
         self.reqparse = reqparse.RequestParser()

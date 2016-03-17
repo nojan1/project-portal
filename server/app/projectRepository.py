@@ -1,8 +1,9 @@
 from git import Repo
+import git.util
 from project import Project
 from configProvider import ConfigProvider
 
-import os
+import os, json
 from injector import inject
 
 class ProjectRepository(object):
@@ -14,19 +15,37 @@ class ProjectRepository(object):
         projects = []
         
         for entry in os.scandir(self.__config.GIT_REPO_DIRECTORY):
-            if entry.is_dir() and os.path.exists(os.path.join(entry.path, ".git")):
+            if entry.is_dir():
                 projects.append(Project(entry.name))
         
         return projects
         
     def createProject(self, projectName):
         projectId = projectName.replace(" ", "-")
-        full_path = os.path.join(self.__config.GIT_REPO_DIRECTORY, projectId)
+        full_path = git.util.join_path(self.__config.GIT_REPO_DIRECTORY, projectId)
         
         if os.path.exists(full_path):
             raise Exception("Project path already exist")
             
         os.mkdir(full_path)
-        return Project(self.__config, projectId, projectName)
+        Repo.init(full_path, bare=True)
+        
+        project = Project(self.__config, projectId)
+        
+        self.__initializeRepo(project, projectName)
+        
+        return project
+
+    def __initializeRepo(self, project, projectName):
+        cloned_repo = project.checkout()
+    
+        infoFilePath = git.util.join_path(cloned_repo.working_dir, "projectinfo.json")
+        with open(infoFilePath, "w") as outfile:
+            json.dump({"projectName": projectName}, outfile, indent = 4)
+            
+        cloned_repo.index.add("projectinfo.json")
+        cloned_repo.index.commit("initial commit")
+        
+        project.checkin(cloned_repo)
         
         

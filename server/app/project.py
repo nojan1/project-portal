@@ -1,42 +1,38 @@
-from git import Repo
-import os, json
+from git import Repo, util
+import os, json, tempfile
 
 class Project(object):
-    def __init__(self, config, projectId, projectName = ""):
+    def __init__(self, config, projectId):
         repoPath = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
-    
-        if os.path.exists(os.path.join(repoPath, ".git")):
-            self._repo = Repo(repoPath)
-        else:
-            self._repo = Repo.init(repoPath)
-            self.initializeRepo(repoPath, projectName)
-        
+        self.repo = Repo(repoPath)
         self.projectId = projectId
-        
-        infoFilePath = os.path.join(repoPath, ".projectinfo.json")
-        if not os.path.exists(infoFilePath):
-            raise Exception("Repo does not contain .projectinfo.json")
-
+ 
+    def getFields(self):
+        infoFilePath = util.join_path(repoPath, "projectinfo.json")
         with open(infoFilePath, "r") as infile:
             obj = json.load(infile)
-            print(obj)
-            self.projectName = obj["projectName"]
             
-        self.lastAccess = self._repo.head.commit.committed_date
+            return {"lastAccess": self.repo.head.commit.committed_date,
+                    "projectName": obj["projectName"],
+                    "projectId": self.projectId}
+                
+    def getFiles(self):
+        pass
+        
+    def getNotes(self):
+        pass
+        
+    def checkout(self):
+        tmpPath = tempfile.mkdtemp()
+        return self.repo.clone(tmpPath)
 
-    def getFiles():
-        pass
+    def checkin(self, cloned_repo):
+        #cloned_repo.remotes.origin.pull()
+        cloned_repo.remotes.origin.push()
         
-    def getNotes():
-        pass
         
-    def initializeRepo(self, repoPath, projectName):
-        infoFilePath = os.path.join(repoPath, ".projectinfo.json")
-        with open(infoFilePath, "w") as outfile:
-            json.dump({"projectName": projectName}, outfile, indent = 4)
-            
-        self._repo.git.add(u=True)
-        self._repo.index.commit("initial commit")
+    
+
             
         
 

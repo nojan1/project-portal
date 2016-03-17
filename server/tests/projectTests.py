@@ -1,6 +1,7 @@
 from pytest import *
 
 from projectRepository import ProjectRepository
+from project import Project
 from configProvider import ConfigProvider
 
 from injector import Injector, singleton
@@ -16,3 +17,17 @@ def projectRepo(tmpdir):
 def test_creating_new_project_return_project_object(projectRepo):
     project = projectRepo.createProject("Test project")
     assert project != None
+     
+def test_new_project_has_repo_object(projectRepo):
+    project = projectRepo.createProject("Test project")
+    assert project.repo != None
+    
+def test_new_project_add_projectinfofile_to_repo(projectRepo):
+    project = projectRepo.createProject("Test project")
+    
+    commit = project.repo.heads.master.commit
+    for blob in commit.tree.blobs:
+        if blob.name == ".projectinfo.json":
+            assert True
+            
+    assert False

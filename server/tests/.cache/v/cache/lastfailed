@@ -1,3 +1,5 @@
 {
-  "projectTests.py": true
+  "projectTests.py::test_creating_new_project_return_project_object": true, 
+  "projectTests.py::test_new_project_add_projectinfofile_to_repo": true, 
+  "projectTests.py::test_new_project_has_repo_object": true
 }
