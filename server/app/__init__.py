@@ -20,7 +20,7 @@ def configure_api(binder, app):
         
         binder.bind(Api, to=api, scope=singleton)
 
-def main(debug):
+def main():
     app = Flask(__name__)
     # app.config.update(
     #     debug=debug,
@@ -40,4 +40,4 @@ def main(debug):
     return app
     
 if __name__ == "__main__":
-    main()(True)
+    main().run(debug=True)

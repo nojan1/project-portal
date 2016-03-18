@@ -15,7 +15,7 @@ class ProjectRepository(object):
         
         for entry in os.scandir(self.__config.GIT_REPO_DIRECTORY):
             if entry.is_dir():
-                projects.append(Project(entry.name))
+                projects.append(Project(self.__config, entry.name))
         
         return projects
         

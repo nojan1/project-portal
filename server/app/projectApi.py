@@ -5,6 +5,7 @@ from flask_injector import FlaskInjector
 from injector import inject
 
 from configProvider import ConfigProvider
+from projectRepository import ProjectRepository
 
 project_fields = {
     'projectId': fields.String,
@@ -13,8 +14,7 @@ project_fields = {
 }
 
 class ProjectListAPI(Resource):
-     @inject(projectRepository=ProjectRepository)
-     @inject(configProvider=ConfigProvider)
+     @inject(projectRepository=ProjectRepository, configProvider=ConfigProvider)
      def __init__(self, projectRepository, configProvider):
         self.__projectRepository = projectRepository
         self.__configProvider = configProvider

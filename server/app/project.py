@@ -1,20 +1,31 @@
-from git import Repo, util
-import os, json, tempfile
+from git import Repo
+import os, json, tempfile, binascii
 
 class Project(object):
     def __init__(self, config, projectId):
-        repoPath = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
-        self.repo = Repo(repoPath)
+        self.__repoPath = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
+        self.repo = Repo(self.__repoPath )
         self.projectId = projectId
  
     def getFields(self):
-        infoFilePath = util.join_path(repoPath, "projectinfo.json")
-        with open(infoFilePath, "r") as infile:
-            obj = json.load(infile)
-            
-            return {"lastAccess": self.repo.head.commit.committed_date,
-                    "projectName": obj["projectName"],
-                    "projectId": self.projectId}
+        projectInfoBlob = self.__getProjectInfoBlob()
+        if projectInfoBlob == None:
+            raise Exception("No projectinfo file in repo")
+    
+        #jsonString = binascii.b2a_qp(projectInfoBlob.data_stream.read())
+        jsonString = projectInfoBlob.data_stream.read().decode('ascii')
+
+        obj = json.loads(jsonString)
+        return {"lastAccess": self.repo.head.commit.committed_date,
+                "projectName": obj["projectName"],
+                "projectId": self.projectId}
+                       
+    def __getProjectInfoBlob(self):
+        for blob in self.repo.tree().blobs:
+            if blob.name == ".projectinfo.json":
+                return blob
+                
+        return None
                 
     def getFiles(self):
         pass
