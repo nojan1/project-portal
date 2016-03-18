@@ -1,5 +1,4 @@
 from git import Repo
-import git.util
 from project import Project
 from configProvider import ConfigProvider
 
@@ -22,7 +21,7 @@ class ProjectRepository(object):
         
     def createProject(self, projectName):
         projectId = projectName.replace(" ", "-")
-        full_path = git.util.join_path(self.__config.GIT_REPO_DIRECTORY, projectId)
+        full_path = os.path.join(self.__config.GIT_REPO_DIRECTORY, projectId)
         
         if os.path.exists(full_path):
             raise Exception("Project path already exist")
@@ -39,7 +38,7 @@ class ProjectRepository(object):
     def __initializeRepo(self, project, projectName):
         cloned_repo = project.checkout()
     
-        infoFilePath = git.util.join_path(cloned_repo.working_dir, "projectinfo.json")
+        infoFilePath = os.path.join(cloned_repo.working_dir, "projectinfo.json")
         with open(infoFilePath, "w") as outfile:
             json.dump({"projectName": projectName}, outfile, indent = 4)
             
