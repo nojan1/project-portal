@@ -2,12 +2,14 @@ import $ = require("jquery");
 import ko = require("knockout");
 import bootstrap = require("bootstrap");
 import router = require("./router");
+import moment = require("moment");
 
 import tb = require("../bindings/treeBinding");
 import md = require("../bindings/markdownBinding");
 import tab = require("../bindings/tabBinding");
 import mimeicon = require("../bindings/mimetypeIconBinding");
 import upload = require("../bindings/uploadBinding");
+import date = require("../bindings/dateBinding");
 
 // Components can be packaged as AMD modules, such as the following:
 ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
@@ -23,9 +25,6 @@ ko.components.register('note-tab', { require: 'components/note-tab/note-tab' });
 ko.components.register('file-tab', { require: 'components/file-tab/file-tab' });
 ko.components.register('loading-indicator', { require: 'components/loading-indicator/loading-indicator' });
 
-
-
-
 // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
 
 // Setup custom bindings
@@ -34,6 +33,9 @@ new md.MarkdownBinding().Register(ko);
 new tab.TabBinding().Register(ko);
 new mimeicon.MimetypeIconBinding().Register(ko);
 new upload.UploadBinding().Register(ko);
+new date.DateBinding().Register(ko);
+
+moment.locale("sv");
 
 $.getJSON("config.json")
     .done((configValues:any) => {

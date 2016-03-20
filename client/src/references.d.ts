@@ -7,5 +7,6 @@
 /// <reference path="../definitions/hasher/hasher.d.ts" />
 /// <reference path="../definitions/markdown-it.d.ts" />
 /// <reference path="../definitions/jquery-file-upload.d.ts" />
+/// <reference path="../definitions/moment.d.ts" />
 declare var require;
 declare var define;

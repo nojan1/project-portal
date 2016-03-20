@@ -9,11 +9,14 @@ export interface LoadingState {
 
 export class viewModel {
     
-    public isLoading = ko.observable<boolean>(false); 
+    public loadingUsageCounter = ko.observable<number>(0);
+    public isLoading = ko.computed<boolean>(() => {
+        return this.loadingUsageCounter() > 0;
+    }, this);
     
     constructor (params: any) {
         $(document).on('loadingstate:changed', (e: any, loadingState: LoadingState) => {
-             this.isLoading(loadingState.isLoading);
+             this.loadingUsageCounter(this.loadingUsageCounter() + (loadingState.isLoading ? 1 : -1));
         });
     }
 

@@ -13,8 +13,7 @@ export class UploadBinding implements cb.CustomBinding {
    }
    
    private init = (element, valueAccessor, allBindings, viewModel, bindingContext) =>{
-       var korv = upload;
-        (<any>$(element)).upload(ko.utils.unwrapObservable(valueAccessor()));
+        (<any>$(element)).fileupload(ko.utils.unwrapObservable(valueAccessor()));
    }
    
    private update = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
