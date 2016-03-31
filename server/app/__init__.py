@@ -7,6 +7,8 @@ from configProvider import *
 from projectApi import *
 from projectRepository import ProjectRepository
 
+from noteApi import *
+
 configProvider = FileConfigProvider("config.json")
 
 def configure_ext(binder):
@@ -17,6 +19,7 @@ def configure_ext(binder):
 def configure_api(binder, app):
         api = Api(app)
         api.add_resource(ProjectListAPI, configProvider.API_PATH_PREFIX + "/projects")
+        api.add_resource(NoteAPI, configProvider.API_PATH_PREFIX + "/project/<string:projectId>/notes")
         
         binder.bind(Api, to=api, scope=singleton)
 
