@@ -1,6 +1,8 @@
 from git import Repo
 import os, json, tempfile, binascii
 
+from note import Note
+
 class Project(object):
     def __init__(self, config, projectId):
         self.__repoPath = os.path.join(config.GIT_REPO_DIRECTORY, projectId)
@@ -31,8 +33,36 @@ class Project(object):
         pass
         
     def getNotes(self):
-        pass
+        try:
+            notes = []
+            noteTree = self.repo.tree().join("notes")
+            for blob in noteTree.blobs:
+                notes.append(Note(blob))
+            
+            return notes
+        except KeyError:
+            return []
+            
         
+    def putFile(self, path, contents):
+        localRepo = self.checkout()
+        fullPath = os.path.join(localRepo.working_dir, path)
+        fullFolder = os.path.dirname(fullPath)
+        
+        if not os.path.exists(fullFolder):
+            os.makedirs(fullFolder)
+        
+        with open(fullPath, "w") as outfile:
+            outfile.write(contents)
+            
+        localRepo.index.add([fullPath])
+        localRepo.index.commit("Updated " + os.path.basename(path))
+        
+        self.checkin(localRepo)
+        
+    def putNote(self, path, contents):
+        self.putFile(os.path.join("notes", path), contents)
+ 
     def checkout(self):
         tmpPath = tempfile.mkdtemp()
         return self.repo.clone(tmpPath)
