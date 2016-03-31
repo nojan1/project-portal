@@ -24,10 +24,10 @@ def test_new_project_has_repo_object(projectRepo):
     
 def test_new_project_add_projectinfofile_to_repo(projectRepo):
     project = projectRepo.createProject("Test project")
-    
-    commit = project.repo.heads.master.commit
-    for blob in commit.tree.blobs:
+
+    for blob in project.repo.tree().blobs:
         if blob.name == ".projectinfo.json":
             assert True
+            return
             
     assert False

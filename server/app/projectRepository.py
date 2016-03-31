@@ -38,11 +38,11 @@ class ProjectRepository(object):
     def __initializeRepo(self, project, projectName):
         cloned_repo = project.checkout()
     
-        infoFilePath = os.path.join(cloned_repo.working_dir, "projectinfo.json")
+        infoFilePath = os.path.join(cloned_repo.working_dir, ".projectinfo.json")
         with open(infoFilePath, "w") as outfile:
             json.dump({"projectName": projectName}, outfile, indent = 4)
             
-        cloned_repo.index.add("projectinfo.json")
+        cloned_repo.index.add([infoFilePath])
         cloned_repo.index.commit("initial commit")
         
         project.checkin(cloned_repo)
