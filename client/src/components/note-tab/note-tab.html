@@ -5,11 +5,13 @@
             </button>
             <div class="clearfix"></div>
             
-        <ul data-bind="foreach: notes()[0].nodes">
-            <li>
-                <a data-bind="click: $parent.selectNote, text: noteName"></a>
-            </li>
-        </ul>
+            <div data-bind="foreach: notes()">
+                <ul data-bind="foreach: nodes">
+                    <li>
+                        <a data-bind="click: $parent.selectNote, text: noteName"></a>
+                    </li>
+                </ul>
+            </div>
         
         <!--<div class="col-md-2">
             <ul data-bind="tree: notes">

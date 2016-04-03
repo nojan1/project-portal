@@ -12,7 +12,8 @@
     "knockout-projections": "~1.1.0",
     "markdown-it": "~6.0.0",
     "blueimp-file-upload": "jquery-file-upload#~9.12.1",
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "knockout-mapping": "^2.4.1"
   },
   "resolutions": {
     "knockout": "~3.3.0-alpha"

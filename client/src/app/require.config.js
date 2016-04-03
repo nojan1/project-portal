@@ -7,6 +7,7 @@ var require = {
         "hasher":                               "bower_modules/hasher/dist/js/hasher.min",
         "jquery":                               "bower_modules/jquery/dist/jquery",
         "knockout":                             "bower_modules/knockout/dist/knockout",
+        "knockout-mapping":                     "bower_modules/knockout-mapping/build/output/knockout.mapping-latest",
         "knockout-projections":                 "bower_modules/knockout-projections/dist/knockout-projections",
         "signals":                              "bower_modules/js-signals/dist/signals.min",
         "text":                                 "bower_modules/requirejs-text/text",

@@ -1,5 +1,6 @@
 /// <amd-dependency path="text!./note-tab.html" />
 import ko = require("knockout");
+import komapping = require("knockout-mapping");
 export var template: string = require("text!./note-tab.html");
 
 import tb = require('../../services/common');
@@ -16,9 +17,11 @@ export class viewModel {
     });
     
     public selectNote = (note: ns.Note) => {
-        this.selectedNote().noteId = note.noteId;
-        this.selectedNote().noteName(note.noteName);
-        this.selectedNote().noteContent(note.noteContent);
+        // this.selectedNote().noteContent(note.noteContent);
+        // this.selectedNote().noteId = note.noteId;
+        // this.selectedNote().noteName(note.noteName);
+        
+        this.selectedNote(komapping.fromJS(note));
     }
 
     public enterEditMode = () => {
@@ -40,9 +43,12 @@ export class viewModel {
     }
 
     constructor (params: any) {
-        new ns.NoteService().getNotes(params.projectId).then((noteSections) => {
+        new ns.NoteService().getNotes(params.projectId()).then((noteSections) => {
             this.notes(noteSections);
-            this.selectNote(noteSections[0].nodes[0]);
+            
+            if(noteSections.length > 0 && noteSections[0].nodes.length > 0){
+                this.selectNote(noteSections[0].nodes[0]);
+            }
         });
     }
 

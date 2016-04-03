@@ -12,13 +12,15 @@ export class MarkdownBinding implements cb.CustomBinding {
    }
    
    public renderMarkdown(element, text){
-       var markdownText = md({
-                        linkify: true,
-                        typographer: true
-                    }).render(text);
-                    
-       //ko.bindingHandlers.html.init(element, () => markdownText, null, null, null); 
-       $(element).html(markdownText);
+       if(text && text.length > 0){
+            var markdownText = md({
+                                linkify: true,
+                                typographer: true
+                            }).render(text);
+                            
+            //ko.bindingHandlers.html.init(element, () => markdownText, null, null, null); 
+            $(element).html(markdownText);
+       }
    }
   
    private init = (element, valueAccessor, allBindings, viewModel, bindingContext) =>{
