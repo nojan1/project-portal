@@ -58,15 +58,24 @@ export class NoteService {
         return dfd.promise();
     }
     
-    public newNote = () => {
+    public newNote = (projectId: string, noteName: string, noteContent: string) : JQueryPromise<Note> => {
+        var note : Note = {
+            noteId: noteName.replace(" ", "-"),
+            noteName: noteName,
+            noteContent: noteContent
+        };
         
+        return this.updateNote(projectId, note);
     }
     
-    public updateNote = (note: Note) => {
-        
+    public updateNote = (projectId: string, note: Note) : JQueryPromise<Note> => {
+        return $.post("/api/project/" + projectId + "/notes", ko.toJS(note));
     }
     
-    public deleteNote = (note: Note) => {
-        
+    public deleteNote = (projectId: string, noteId: string) : JQueryPromise<boolean> => {
+        return $.ajax(<any>{
+           url: "",
+           method: "DELETE" 
+        });
     }
 }

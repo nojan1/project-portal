@@ -1,5 +1,5 @@
 from git import Repo
-import os, json, tempfile, binascii
+import os, json, tempfile, binascii, codecs
 
 from note import Note
 
@@ -15,7 +15,7 @@ class Project(object):
             raise Exception("No projectinfo file in repo")
     
         #jsonString = binascii.b2a_qp(projectInfoBlob.data_stream.read())
-        jsonString = projectInfoBlob.data_stream.read().decode('ascii')
+        jsonString = projectInfoBlob.data_stream.read().decode('utf-8')
 
         obj = json.loads(jsonString)
         return {"lastAccess": self.repo.head.commit.committed_date,
@@ -52,7 +52,7 @@ class Project(object):
         if not os.path.exists(fullFolder):
             os.makedirs(fullFolder)
         
-        with open(fullPath, "w") as outfile:
+        with codecs.open(fullPath, "w", "utf-8") as outfile:
             outfile.write(contents)
             
         localRepo.index.add([fullPath])

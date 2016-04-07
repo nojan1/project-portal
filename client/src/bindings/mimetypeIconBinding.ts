@@ -6,14 +6,13 @@ import bootstrap = require("bootstrap");
 export class MimetypeIconBinding implements cb.CustomBinding {
    public Register(knockout : any){
        knockout.bindingHandlers.mimeicon = {
-           init: this.init,
-           update: this.init
+           update: this.update
        };
    }
-   
-   private init = (element, valueAccessor, allBindings, viewModel, bindingContext) =>{
-      var mimetype = <string>ko.utils.unwrapObservable(valueAccessor());
-      mimetype = mimetype.replace("/","-");
+
+   private update = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
+       var mimetype = <string>ko.utils.unwrapObservable(valueAccessor());
+       mimetype = mimetype.replace("/","-");
       
        $(element).attr("src", "images/mimetypes/" + mimetype + ".png");
        $(element).on("error", function(){
@@ -23,9 +22,5 @@ export class MimetypeIconBinding implements cb.CustomBinding {
                $(this).attr("src", fallback);
            }
        });
-   }
-   
-   private update = (element, valueAccessor, allBindings, viewModel, bindingContext) => {
-        
    }
 }

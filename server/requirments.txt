@@ -1,4 +1,5 @@
 Flask-RESTful
+flask-restplus
 flask-injector
 pytest
 gitpython

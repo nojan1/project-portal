@@ -11,7 +11,7 @@ from project import Project
 note_fields = {
     'noteId': fields.String,
     'noteName': fields.String,
-    'noteContents': fields.String
+    'noteContent': fields.String
 }
 
 class NoteAPI(Resource):
@@ -25,5 +25,16 @@ class NoteAPI(Resource):
         project = Project(self.__configProvider, projectId)
         return [marshal(note, note_fields) for note in project.getNotes()]
         
-     def post(self):
-        pass
+     def post(self, projectId):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('noteId', type = str, required = True, location = 'json')
+        self.reqparse.add_argument('noteName', type = str, required = True, location = 'json')
+        self.reqparse.add_argument('noteContent', type = str, required = True, location = 'json')
+        
+        args = self.reqparse.parse_args()
+        project = Project(self.__configProvider, projectId)
+        
+        project.putNote(args["noteId"], args["noteContent"])
+        
+        return marshal(args, note_fields)
+        

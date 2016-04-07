@@ -6,7 +6,6 @@ import moment = require("moment");
 export class DateBinding implements cb.CustomBinding {
    public Register(knockout : any){
        knockout.bindingHandlers.date = {
-           init: this.processDate,
            update: this.processDate
        };
    }

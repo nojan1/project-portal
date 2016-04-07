@@ -17,11 +17,12 @@ export class viewModel {
     });
     
     public selectNote = (note: ns.Note) => {
-        // this.selectedNote().noteContent(note.noteContent);
-        // this.selectedNote().noteId = note.noteId;
-        // this.selectedNote().noteName(note.noteName);
-        
         this.selectedNote(komapping.fromJS(note));
+    }
+
+    public newNote = () => {
+        this.selectedNote(komapping.fromJS({}));
+        this.enterEditMode();
     }
 
     public enterEditMode = () => {
@@ -29,26 +30,46 @@ export class viewModel {
     }
 
     public saveChanges = () => {
+        if(!this.selectedNote().noteName() && this.selectedNote().noteContent()){
+            alert("No data entered");
+            return;
+        }
+        
         if(this.selectedNote().noteId){
             //Edit
-            // let noteToUpdate = ko.utils.arrayFirst(this.notes(), x => x.noteId == this.selectedNote().noteId);
-            // noteToUpdate.noteName = this.selectedNote().noteName();
-            // noteToUpdate.noteContent = this.selectedNote().noteContent();
+            
         }else{
             //New
-            
+            $(document).trigger('loadingstate:changed', {isLoading: true});
+            new ns.NoteService().newNote(this.params.projectId(),
+                                         this.selectedNote().noteName(),
+                                         this.selectedNote().noteContent())
+                .done((note: ns.Note) => {
+                    this.notes()[0].nodes.push(note);
+                    this.selectedNote(komapping.fromJS(note));
+                })
+                .fail((data: any, error: string, errorThrown: string) => {
+                    alert("Error when creating note! " + error + ": " + errorThrown);
+                })
+                .always(() => {
+                   $(document).trigger('loadingstate:changed', {isLoading: false}); 
+                });
         }
         
         this.inEditMode(false);
     }
 
-    constructor (params: any) {
+    constructor (private params: any) {
+        $(document).trigger('loadingstate:changed', {isLoading: true});
         new ns.NoteService().getNotes(params.projectId()).then((noteSections) => {
             this.notes(noteSections);
             
             if(noteSections.length > 0 && noteSections[0].nodes.length > 0){
                 this.selectNote(noteSections[0].nodes[0]);
             }
+        })
+        .always(() => {
+            $(document).trigger('loadingstate:changed', {isLoading: false}); 
         });
     }
 

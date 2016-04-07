@@ -1,8 +1,8 @@
-from git import Repo
+from git import Repo, InvalidGitRepositoryError
 from project import Project
 from configProvider import ConfigProvider
 
-import os, json
+import os, json, codecs
 from injector import inject
 
 class ProjectRepository(object):
@@ -15,7 +15,10 @@ class ProjectRepository(object):
         
         for entry in os.scandir(self.__config.GIT_REPO_DIRECTORY):
             if entry.is_dir():
-                projects.append(Project(self.__config, entry.name))
+                try:
+                    projects.append(Project(self.__config, entry.name))
+                except InvalidGitRepositoryError:
+                    continue
         
         return projects
         
@@ -39,7 +42,7 @@ class ProjectRepository(object):
         cloned_repo = project.checkout()
     
         infoFilePath = os.path.join(cloned_repo.working_dir, ".projectinfo.json")
-        with open(infoFilePath, "w") as outfile:
+        with codecs.open(infoFilePath, "w", "utf-8") as outfile:
             json.dump({"projectName": projectName}, outfile, indent = 4)
             
         cloned_repo.index.add([infoFilePath])
