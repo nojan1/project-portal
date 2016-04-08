@@ -44,7 +44,7 @@ class Project(object):
             return []
             
         
-    def putFile(self, path, contents):
+    def putFile(self, path, contents, binary=True):
         localRepo = self.checkout()
         fullPath = os.path.join(localRepo.working_dir, path)
         fullFolder = os.path.dirname(fullPath)
@@ -52,8 +52,12 @@ class Project(object):
         if not os.path.exists(fullFolder):
             os.makedirs(fullFolder)
         
-        with codecs.open(fullPath, "w", "utf-8") as outfile:
-            outfile.write(contents)
+        if binary:
+            with open(fullPath, "w") as outfile:
+                outfile.write(contents)
+        else:
+            with codecs.open(fullPath, "w", "utf-8") as outfile:
+                outfile.write(contents)
             
         localRepo.index.add([fullPath])
         localRepo.index.commit("Updated " + os.path.basename(path))
@@ -61,7 +65,7 @@ class Project(object):
         self.checkin(localRepo)
         
     def putNote(self, path, contents):
-        self.putFile(os.path.join("notes", path), contents)
+        self.putFile(os.path.join("notes", path), contents, False)
  
     def checkout(self):
         tmpPath = tempfile.mkdtemp()
