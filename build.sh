@@ -9,9 +9,9 @@ echo "Running server tests"
 
 cd server/
 if [ -d env ]; then
-    env/Scripts/py.test tests/* || exit 1
+    PYTHONPATH=app env/Scripts/python -m pytest tests/* || exit 1
 else
-    py.test tests/* || exit 1
+    python -m pytest tests/* || exit 1
 fi
 
 echo "Server tests completed"
@@ -19,3 +19,6 @@ echo "Building docker image"
 
 cd ../
 docker build -t project-portal .
+
+[ ! -d build ] && mkdir build
+docker save project-portal > build/project-portal.tar
